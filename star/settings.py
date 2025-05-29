@@ -82,8 +82,11 @@ WSGI_APPLICATION = 'star.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE' : 'django.db.backends.postgresql',
+        'NAME' : 'bcredb',
+        'USER' : 'postgres',
+        'PASSWORD' : os.getenv('DB_PASSOWRD'),
+        'HOST' : 'localhost',
     }
 }
 
@@ -136,3 +139,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
