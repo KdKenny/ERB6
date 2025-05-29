@@ -14,7 +14,7 @@ class Listing(models.Model):
     description = models.TextField(blank=True)
     bedrooms = models.IntegerField()
     bathrooms = models.DecimalField(max_digits=2, decimal_places=1)
-    clubhousre = models.IntegerField()
+    clubhouse = models.IntegerField()
     sqrt = models.IntegerField()
     estate_size = models.FloatField(default=0.0)
     is_published = models.BooleanField(default=True)
