@@ -19,7 +19,7 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href={% url "pages:index" %}>Home</a>
+              <a href={% url "pages:index" %}><i class="fas fa-home"></i>Home</a>
             </li>
             <li class="breadcrumb-item">
               <a href={% url "listings:listings" %}>Listings</a>
@@ -158,7 +158,7 @@
                   type="text"
                   name="listing"
                   class="form-control"
-                  value="45 Prince Street"
+                  value={{listing.street}}
                   disabled
                 />
               </div>

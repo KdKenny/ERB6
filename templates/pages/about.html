@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize%}
 {% block content %}
 <section id="showcase-inner" class="py-5 text-white">
       <div class="container">
@@ -45,24 +46,26 @@
               harum perferendis laborum molestias quia.
             </p>
           </div>
+          {% if mvp_realtors %}
           <div class="col-md-4">
+            {% for realtor in mvp_realtors %}
             <div class="card">
               <img
                 class="card-img-top"
-                {% comment %} fix img link {% endcomment %}
-                src="assets/img/realtors/kyle.jpg"
+                src={{realtor.photo.url}}
                 alt="Seller of the month"
               />
               <div class="card-body">
                 <h5 class="card-title">Seller Of The Month</h5>
-                <h6 class="text-secondary">Kyle chan</h6>
+                <h6 class="text-secondary">{{realtor.name}}</h6>
                 <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-                  nesciunt amet, illo itaque similique repellat. content.
+                  {{realtor.description|truncatewords:200}}
                 </p>
               </div>
             </div>
+            {% endfor %}
           </div>
+          {% endif %}
         </div>
       </div>
     </section>
@@ -85,49 +88,21 @@
       <div class="container">
         <h2 class="text-center">Our Team</h2>
         <div class="row text-center">
+          {% if realtors %}
+          {% for realtor in realtors %}
           <div class="col-md-4">
-            <img
-            {% comment %} fix img link {% endcomment %}
-              src="assets/img/realtors/kyle.jpg"
-              alt=""
-              class="rounded-circle mb-3"
-            />
-            <h4>Kyle Chan</h4>
+            <img src={{realtor.photo.url}} alt="" class="rounded-circle mb-3"/>
+            <h4>{{realtor.name | title}}</h4>
             <p class="text-success">
               <i class="fas fa-award text-success mb-3"></i> Realtor
             </p>
             <hr />
-            <p><i class="fas fa-phone"></i> (852)-999-54321</p>
-            <p><i class="fas fa-envelope-open"></i> kyle@paradise.co</p>
+            <p><i class="fas fa-phone"></i> {{realtor.phone}}</p>
+            <p><i class="fas fa-envelope-open"></i> {{realtor.email}}</p>
           </div>
-
-          <div class="col-md-4">
-            <img
-            {% comment %} fix img link {% endcomment %}
-              src="assets/img/realtors/mark.jpg"
-              alt=""
-              class="rounded-circle mb-3"
-            />
-            <h4>Mark Lee</h4>
-            <p class="text-success">Realtor</p>
-            <hr />
-            <p><i class="fas fa-phone"></i> (852)-999-65432</p>
-            <p><i class="fas fa-envelope-open"></i> mark@paradise.co</p>
-          </div>
-
-          <div class="col-md-4">
-            <img
-            {% comment %} fix img link {% endcomment %}
-              src="assets/img/realtors/jenny.jpg"
-              alt=""
-              class="rounded-circle mb-3"
-            />
-            <h4>Jenny Cheung</h4>
-            <p class="text-success">Realtor</p>
-            <hr />
-            <p><i class="fas fa-phone"></i> (852)-999-76543</p>
-            <p><i class="fas fa-envelope-open"></i> jenny@paradise.co</p>
-          </div>
+          
+          {% endfor %}
+          {% endif %}
         </div>
       </div>
     </section>
