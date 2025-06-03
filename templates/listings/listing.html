@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 <!-- load static -->
 {% load static %} {% load humanize %}
-{% comment %} {% load listing_extras %} {% endcomment %}
+{% load listing_extras %}
 <!-- load content -->
 {% block content %} 
     <section id="showcase-inner" class="py-5 text-white">
@@ -32,7 +32,7 @@
       </div>
     </section>
 
-    <!-- Listing -->
+    {% comment %} <!-- Listing -->
     <section id="listing" class="py-4">
       <div class="container">
         <a href={% url "listings:listings" %} class="btn btn-light mb-4">Back To Listings</a>
@@ -130,84 +130,10 @@
                 </a>
               </div>
 		   {% endif %}
-            </div>
-            <!-- Fields -->
-            <div class="row mb-5 fields">
-              <div class="col-md-6">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-money-bill-alt"></i> Asking Price:
-                    <span class="float-right">${{listing.price|intword|intcomma}}</span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-bed"></i> Bedrooms:
-                    <span class="float-right">{{listing.bedrooms}}</span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-bath"></i> Bathrooms:
-                    <span class="float-right">{{listing.bathrooms}}</span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-dumbbell"></i> ClubHouse:
-                    <span class="float-right">{{listing.clubhouse}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-6">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-th-large"></i> Square Feet:
-                    <span class="float-right">{{listing.sqrt|intcomma}}</span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-square"></i> Estate Size:
-                    <span class="float-right">{{listing.estate_size}} Buildings </span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-calendar"></i> Listing Date:
-                    <span class="float-right">{{listing.list_date|timesince}}</span>
-                  </li>
-                  <li class="list-group-item text-secondary">
-                    <i class="fas fa-bed"></i> Realtor:
-                    <span class="float-right">{{listing.realtor.name}}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="row mb-5">
-              <div class="col-md-12">
-                {{listing.description|linebreaks}}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card mb-3">
-              <img
-                class="card-img-top"
-                src= {{listing.realtor.photo.url}}
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title">Property Realtor</h5>
-                <h6 class="text-secondary">{{listing.realtor.name}}</h6>
-              </div>
-            </div>
-            <button
-              class="btn-primary btn-block btn-lg"
-              data-toggle="modal"
-              data-target="#inquiryModal"
-            >
-              Make An Inquiry
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+            </div> {% endcomment %}
 
 
-    {% comment %} <!-- Listing -->
+    <!-- Listing -->
     <section id="listing" class="py-4">
       <div class="container">
         <a href={% url "listings:listings" %} class="btn btn-light mb-4">Back To Listings</a>
@@ -283,11 +209,7 @@
             <!-- Description -->
             <div class="row mb-5">
               <div class="col-md-12">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia recusandae esse reiciendis officia omnis non rerum
-                dicta cupiditate nostrum molestias deserunt aut minus inventore
-                animi atque, consequuntur ad fugit. Possimus culpa blanditiis
-                repellendus ipsa similique ullam, natus error dolor harum.
+                {{listing.description|linebreaks}}
               </div>
             </div>
           </div>
@@ -313,7 +235,7 @@
           </div>
         </div>
       </div>
-    </section> {% endcomment %}
+    </section>
 
     <!-- Inquiry Modal -->
     <div class="modal fade" id="inquiryModal" role="dialog">
