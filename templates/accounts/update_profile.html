@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} | Update Profile {% endblock %}
+
+{% block content %}
+<section id="update_profile" class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4>
+              <i class="fas fa-user-edit"></i> Update Profile</h4>
+          </div>
+          <div class="card-body">
+            <!-- Alerts -->
+            {% include 'partials/_alert.html' %}
+            <form action="{% url 'accounts:update_profile' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                {{ form.first_name }}
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                {{ form.last_name }}
+              </div>
+              <div class="form-group">
+                <label for="username">Username</label>
+                {{ form.username }}
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email }}
+              </div>
+              <input type="submit" value="Update" class="btn btn-secondary btn-block">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

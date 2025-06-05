@@ -1,6 +1,10 @@
 from django.shortcuts import render , redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from .forms import UserUpdateForm, PasswordChangingForm
+from contacts.models import Contact
 
 # Create your views here.
 def register(request):
@@ -51,6 +55,41 @@ def logout(request):
         auth.logout(request)
     return redirect("pages:index")
 
+@login_required
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    user_form = UserUpdateForm(instance=request.user)
+    password_form = PasswordChangingForm(request.user)
+    contacts = Contact.objects.filter(user_id=request.user.id)
+    context = {
+        'user_form': user_form,
+        'password_form': password_form,
+        'contacts': contacts
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('accounts:dashboard')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'accounts/update_profile.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangingForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('accounts:dashboard')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangingForm(request.user)
+    return render(request, 'accounts/change_password.html', {'form': form})
