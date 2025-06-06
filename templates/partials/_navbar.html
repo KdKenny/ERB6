@@ -9,55 +9,64 @@
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
-      data-target="#navbarNavAltMarkup"
-    >
+      data-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav">
         <li {% if request.path == '/' %} class="nav-item active mr-3" {% else %} 
-        class="nav-item mr-3" {% endif %} >
+        class="nav-item mr-3" {% endif %}>
           <a class="nav-link" href={% url "pages:index" %}>Home</a>
         </li>
         <li {% if 'about' in request.path %} class="nav-item active mr-3" {% else %} 
-        class="nav-item mr-3" {% endif %} >
+        class="nav-item mr-3" {% endif %}>
           <a class="nav-link" href={% url "pages:about" %}>About</a>
         </li>
         <li {% if 'listings' in request.path %} class="nav-item active mr-3" {% else %}
-        class="nav-item mr-3" {% endif %} >
+        class="nav-item mr-3" {% endif %}>
           <a class="nav-link" href={% url "listings:listings" %}>Featured Listings</a>
         </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-        <li {% if 'dashboard' in request.path %} class="nav-item active mr-3" {% else %}
-        class="nav-item mr-3" {% endif %} >
-          <a class="nav-link" href={% url "accounts:dashboard" %}>Welcome {{user.username}} (Dashboard)
+        <!-- User Profile Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i> Welcome {{ user.first_name|default:user.username }}
           </a>
-        </li>
-        <!-- logout -->        
-        <li class="nav-item mr-3">
-          <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
-            <i class="fas fa-sign-out-alt"></i> Logout</a>
-          <form action={% url "accounts:logout" %} method="POST" id='logout'>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="{% url 'accounts:dashboard' %}">
+              <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'accounts:update_profile' %}">
+              <i class="fas fa-user-edit"></i> Edit Profile
+            </a>
+            <a class="dropdown-item" href="{% url 'accounts:change_password' %}">
+              <i class="fas fa-key"></i> Change Password
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+          <!-- Hidden logout form -->
+          <form action="{% url 'accounts:logout' %}" method="POST" id='logout' style="display: none;">
             {% csrf_token %}
-            <input type='hidden'>
           </form>
         </li>
-        <!-- end of logout-->
         {% else %}
-        <li {% if 'register' in request.path %} class="nav-item mr-3" {% else %}
-        class="nav-item mr-3" {% endif %} >
-          <a class="nav-link" href={% url "accounts:register" %}>
-            <i class="fas fa-user-plus"></i> Register</a
-          >
+        <!-- Login/Register Links -->
+        <li {% if 'register' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href="{% url 'accounts:register' %}">
+            <i class="fas fa-user-plus"></i> Register
+          </a>
         </li>
-        <li {% if 'login' in request.path %} class="nav-item active mr-3" {% else %}
-        class="nav-item mr-3" {% endif %} >
-          <a class="nav-link" href={% url "accounts:login" %}>
-            <i class="fas fa-sign-in-alt"></i> Login</a
-          >
+        <li {% if 'login' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+          <a class="nav-link" href="{% url 'accounts:login' %}">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
         </li>
         {% endif %}
       </ul>

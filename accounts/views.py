@@ -6,7 +6,6 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import UserUpdateForm, PasswordChangingForm
 from contacts.models import Contact
 
-# Create your views here.
 def register(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
